@@ -1,0 +1,64 @@
+--------------------------------------------
+# Terraform State Storage Azure RM
+Resource Group: terraform-storage-rg
+Storage Account: terraformstatexlrwdrzs
+Container: tfstatefiles
+
+# Manifests Folder
+terraform-manifests
+
+# System Default Working Directory
+$(System.DefaultWorkingDirectory)/terraform-manifests
+$(Pipeline.Workspace)/terraform-manifests-out
+# List Files
+- bash: echo Contents in Pipeline Workspace Artifact Directory; ls -Ra $(System.DefaultWorkingDirectory)/terraform-manifests
+--------------------------------------------
+# Environment Name
+$(STAGE_ENVIRONMENT)
+
+# Stage State File Name
+aks-$(STAGE_ENVIRONMENT).tfstate
+
+# Pipeline Working Directory
+$(Pipeline.Workspace)/terraform-manifests-out
+
+# Stage Command Arguments for Terraform Plan
+-var rdpkey=$(rdpkey.secureFilePath) 
+-var environment=$(STAGE_ENVIRONMENT) 
+-out $(Pipeline.Workspace)/terraform-manifests-out/$(STAGE_ENVIRONMENT)-$(Build.BuildId).out
+
+# 1- way
+terraform plan
+terraform apply
+
+# 2-way
+terraform plan -out v1plan.out
+terraform apply v1plan.out
+
+
+# Stage Command Arguments for Terraform Apply
+$(Pipeline.Workspace)/terraform-manifests-out/$(STAGE_ENVIRONMENT)-$(Build.BuildId).out
+
+# List Files
+- bash: echo Contents in Pipeline Workspace Artifact Directory; ls -Ra $(Pipeline.Workspace)/terraform-manifests-out    
+--------------------------------------------
+# Environment Name
+$(PROD_ENVIRONMENT)
+
+# Prod State File
+aks-$(PROD_ENVIRONMENT).tfstate
+
+# Pipeline Working Directory
+$(Pipeline.Workspace)/terraform-manifests-out
+
+# Prod Command Arguments for Terraform Plan
+-var rdpkey=$(rdpkey.secureFilePath) 
+-var environment=$(PROD_ENVIRONMENT) 
+-out $(Pipeline.Workspace)/terraform-manifests-out/$(PROD_ENVIRONMENT)-$(Build.BuildId).out
+
+# Prod Command Arguments for Terraform Apply
+$(Pipeline.Workspace)/terraform-manifests-out/$(PROD_ENVIRONMENT)-$(Build.BuildId).out
+--------------------------------------------
+
+# Package and Deploy using Helm Charts 
+https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/helm-deploy?view=azure-devops
