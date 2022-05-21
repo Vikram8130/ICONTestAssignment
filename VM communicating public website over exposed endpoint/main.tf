@@ -74,7 +74,6 @@ resource "azurerm_network_interface" "app_interface" {
     azurerm_subnet.SubnetA
   ]
 }
-
 resource "azurerm_windows_virtual_machine" "app_vm" {
   name                = "appvm"
   resource_group_name = azurerm_resource_group.app_grp.name
