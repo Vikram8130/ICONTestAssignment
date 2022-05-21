@@ -1,8 +1,8 @@
-In this module I have tried to create the DB Instances interatcing with separate AKS cluster as per the terraform workspace which 
-would provide us different environment like staging and productiom with different resources groups properties.I have created different 
-aks cluster as I was having some doubt regarding current db instances allocation with respect yo main application environment 
-Infrastructure.
+In this module I have tried to create the DB Instances interacting with separate AKS cluster as per the terraform workspaces which 
+would provide us different environments like staging and productiom with different resources groups properties.
+I have created different aks cluster as I was having some doubt regarding current db instances allocation with respect to 
+main application environment Infrastructure.
 I could have also used statefullset in main application Kubernetes environment for these db instances but due to lack of 
-knowledge about  crticality, storage persistance and enironment configuration,, I tried to avoid it as it is currently existing 
-on ICON shared environment.
+knowledge about  crticality, storage persistance and enironment configuration,I tried to avoid it as it is currently existing 
+on an ICON shared environment.
 
