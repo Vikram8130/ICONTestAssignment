@@ -40,6 +40,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   agent_pool_profile {
     name            = "agentpool"
     count           = "${var.agent_count[terraform.workspace]}"
+    node_count      = "2"
     vm_size         = "Standard_DS2_v4"
     os_type         = "Windows"
     os_disk_size_gb = 30
@@ -57,6 +58,12 @@ az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscr
 
   network_profile {
     network_plugin = "azure"
+  }
+  
+  addon_profile {
+    http_application_routing {
+      enabled = true
+    }
   }
   tags {
     Environment = "${terraform.workspace}"
