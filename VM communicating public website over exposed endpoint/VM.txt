@@ -1,0 +1,3 @@
+In this module I have tried to create Bastion Host Windows VM that can be easily aaccessible by static public ip and also being 
+exposed over an endpoint to a Azure Sevice like Blob storage for communicating with public website.
+ 
