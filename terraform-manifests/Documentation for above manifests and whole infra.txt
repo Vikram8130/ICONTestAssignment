@@ -1,0 +1,95 @@
+Create Azure DevOps Pipeline to create AKS cluster using Terraform
+We are going to create two environments Dev and QA using single pipeline.
+Terraform Manifests Validate
+Provision Stage AKS Cluster
+Provision Prod AKS Cluster
+
+Step 1: Create New Azure DevOps Project for IAC
+Go to -> Azure DevOps -> Select Organization -> aksdemo2 -> Create New Project
+Project Name: terraform-azure-aks
+Project Descritpion: Provision Azure AKS Cluster using Azure DevOps & Terraform
+Visibility: Private
+Click on Create
+
+Step 2: Create Azure RM Service Connection for Terraform Commands
+This is a pre-requisite step required during Azure Pipelines
+We can create from Azure Pipelines -> Terraform commands screen but just to be in a orderly manner we are creating early.
+Go to -> Azure DevOps -> Select Organization -> Select project terraform-azure-aks
+Go to Project Settings
+Go to Pipelines -> Service Connections -> Create Service Connection
+Choose a Service Connection type: Azure Resource Manager
+Authentication Method: Service Princiapl (automatic)
+Scope Level: Subscription
+Subscription: Pay-As-You-Go
+Resource Group: LEAVE EMPTY
+Service Connection Name: terraform-aks-azurerm-svc-con
+Description: Azure RM Service Connection for provisioning AKS Cluster using Terraform on Azure DevOps
+Security: Grant access permissions to all pipelines (check it - leave to default)
+Click on SAVE
+
+Step3: Provide Permission to create Azure AD Groups
+Provide permission for Service connection created in previous step to create Azure AD Groups
+Go to -> Azure DevOps -> Select Organization -> Select project terraform-azure-aks
+Go to Project Settings -> Pipelines -> Service Connections
+Open terraform-aks-azurerm-svc-con
+Click on Manage Service Principal, new tab will be opened
+Click on View API Permissions
+Click on Add Permission
+Select an API: Microsoft APIs
+Commonly used Microsoft APIs: Supported legacy APIs: Azure Active Directory Graph-DEPRECATING Use Microsoft Graph
+Click on Application Permissions
+Check Directory.ReadWrite.All and click on Add Permission
+Click on Grant Admin consent for Default Directory
+
+Step4: Create Azure Pipeline to Provision AKS Cluster
+Go to -> Azure DevOps -> Select Organization -> Select project terraform-azure-aks
+Go to Pipelines -> Pipelines -> Create Pipeline
+
+Step5: Verify all the resources created
+
+Verify Pipeline logs
+Verify Pipeline logs for all the tasks
+Verify new Storage Account in Azure Mgmt Console
+Verify if terraform init command ran successfully from Azure Pipelines
+Verify Storage Account
+Verify Storage Container
+Verify tfstate file got created in storage container
+Verify new AKS Cluster in Azure Mgmt Console
+Verify Resource Group
+Verify AKS Cluster
+Verify AD Group
+Verify Tags for a nodepool
+
+Step6: Connect to STAGE AKS Cluster & Verify
+
+# List Nodepools
+az aks nodepool list --cluster-name terraform-aks-stage-cluster --resource-group terraform-aks-stage -o table
+
+# Setup kubeconfig
+az aks get-credentials --resource-group <Resource-Group-Name>  --name <AKS-Cluster-Name>
+az aks get-credentials --resource-group terraform-aks-stage  --name terraform-aks-stage-cluster --admin
+
+
+# View Cluster Info
+kubectl cluster-info
+
+# List Kubernetes Worker Nodes
+kubectl get nodes
+
+Step 7: 
+
+Connect to STAGE AKS Cluster & Verify
+
+# List Nodepools
+az aks nodepool list --cluster-name terraform-aks-stage-cluster --resource-group terraform-aks-stage -o table
+
+# Setup kubeconfig
+az aks get-credentials --resource-group <Resource-Group-Name>  --name <AKS-Cluster-Name>
+az aks get-credentials --resource-group terraform-aks-stage  --name terraform-aks-stage-cluster --admin
+
+
+# View Cluster Info
+kubectl cluster-info
+
+# List Kubernetes Worker Nodes
+kubectl get nodes

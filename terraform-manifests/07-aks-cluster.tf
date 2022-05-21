@@ -1,3 +1,12 @@
+# Name of the AKS Cluster going to be ResourceGroupName-Cluster
+/* 
+Example Names:
+terraform-aks-stage-cluster
+terraform-aks-prod-cluster
+*/
+
+# Node Lables and Tags will have a environment with respective environment name
+
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix          = "${azurerm_resource_group.aks_rg.name}"
   location            = azurerm_resource_group.aks_rg.location
