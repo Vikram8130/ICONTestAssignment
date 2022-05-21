@@ -3,5 +3,6 @@ would provide us different environment like staging and productiom with differen
 aks cluster as I was having some doubt regarding current db instances allocation with respect yo main application environment 
 Infrastructure.
 I could have also used statefullset in main application Kubernetes environment for these db instances but due to lack of 
-knowledge about  crtically, storage persistance and enironment configuration,, I tried to avoid it.
+knowledge about  crticality, storage persistance and enironment configuration,, I tried to avoid it as it is currently existing 
+on ICON shared environment.
 
