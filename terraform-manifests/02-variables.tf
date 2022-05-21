@@ -47,3 +47,37 @@ variable "windows_admin_password" {
   description = "This variable defines the Windows admin password k8s Worker nodes"  
 }
 
+variable "name" {
+  type        = string
+  default     = "tamops"
+  description = "Name for resources"
+}
+
+variable "location" {
+  type        = string
+  default     = "uksouth"
+  description = "Azure Location of resources"
+}
+
+variable "addons" {
+  description = "Defines which addons will be activated."
+  type = object({
+    oms_agent                   = bool
+    ingress_application_gateway = bool
+  })
+}
+
+variable "kubernetes_cluster_rbac_enabled" {
+  default = "true"
+}
+
+variable "kubernetes_version" {
+}
+
+variable "agent_count" {
+}
+
+variable "vm_size" {
+}
+variable "aks_admins_group_object_id" {
+}
