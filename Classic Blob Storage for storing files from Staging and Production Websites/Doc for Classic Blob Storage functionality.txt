@@ -1,0 +1,3 @@
+In this module, I have tried to create a configuration where Classic Blob Storage Account is being used to upload files from 
+staging and production website from existing Website App Service Plan and App Service.
+ 
