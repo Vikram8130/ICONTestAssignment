@@ -55,7 +55,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   Service principals are useful for working with applications and tasks that can be automated.
 
 export AZ_SUBSCRIPTION_ID=$(az account show --query id --out tsv)
-az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscriptions/$AZ_SUBSCRIPTION_ID"*/
+az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscriptions/$AZ_SUBSCRIPTION_ID"
+*/
 
   network_profile {
     network_plugin = "azure"
