@@ -1,5 +1,5 @@
 Create Azure DevOps Pipeline to create AKS cluster using Terraform
-We are going to create two environments Dev and QA using single pipeline.
+We are going to create two environments Stage and Prod using single pipeline.
 Terraform Manifests Validate
 Provision Stage AKS Cluster
 Provision Prod AKS Cluster
