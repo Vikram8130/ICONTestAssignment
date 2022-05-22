@@ -60,7 +60,6 @@ provider "azurerm" {
   tenant_id       = "70c0f6d9-7f3b-4425-a6b6-09b47643ec58"
   features {}
 }
-
 variable storage_account_name{
     type = string
     description = "Please enter the storage account name"
