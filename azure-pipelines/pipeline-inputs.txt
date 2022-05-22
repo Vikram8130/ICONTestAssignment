@@ -33,7 +33,9 @@ $(Pipeline.Workspace)/terraform-manifests-out
 -out $(Pipeline.Workspace)/terraform-manifests-out/$(STAGE_ENVIRONMENT)-$(Build.BuildId).out
 
 # 1- way
+terraform init
 terraform plan
+terraform validate
 terraform apply
 
 # 2-way
