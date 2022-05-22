@@ -1,3 +1,6 @@
 In this module, I have tried to include manifests having services like Loadbalancer and Ingress through App_Gateway 
 which can be used to exposed application pods outside the Kubernetes Cluster environment apart from the configuration
 that I have used in the terraform-manifests files.
+
+We can also use helm to deploy NGINX Ingress Controller on Kubernetes Cluster created above using steps mentioned in below URL.
+https://platform9.com/learn/v1.0/tutorials/nginix-controller-helm
