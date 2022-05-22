@@ -40,7 +40,7 @@ resource "azurerm_app_service" "website_app" {
   }
 
   tags = {
-    environment = "staging"
+    environment = "stage"
   }
 }
 
@@ -86,8 +86,8 @@ resource "azurerm_app_service" "website_app" {
   }
 
   tags = {
-    environment = "production"
+    environment = "prod"
   }
 }
 
-
+# Above Templates can be imported to the upgraded architecture as per the business needs and decision. 
