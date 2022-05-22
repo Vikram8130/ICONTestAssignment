@@ -6,3 +6,13 @@ I could have also used statefullset in main application Kubernetes environment f
 knowledge about  crticality, storage persistance and enironment configuration,I tried to avoid it as it is currently existing 
 on an ICON shared environment.
 
+-> Note 1 : We can use regional Azure Database Service like Azure PostgreSql database(Regional Service) or 
+          for more high availability, we can use Azure for SQL database(Global Database).
+          For more availability and NoSQL functionality, we can gor for Azure Cosmos Database.
+
+-> Note 2 : We can also use Azure Site to Site VPN Connetion over secured IPSec tunnels to for more secure communication between 
+databases in different or same datacentres/zones and networking componenents and services in aks cluster in Azure environment.
+We can also use Azure Express Route for a more dedicated connnection between databases and azure services and components. 
+
+
+
