@@ -46,7 +46,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     os_disk_size_gb = 30
     vnet_subnet_id  = "${var.subnet_id}"
   }
-  #For high availability , we can put these nodes with db instances in different  
+  #For high availability , we can put these nodes with db instances in different availabilty azones or datacentres. 
   service_principal {
     client_id     = "${var.client_id}"
     client_secret = "${var.client_secret}"
