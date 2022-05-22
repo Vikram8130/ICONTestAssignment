@@ -32,7 +32,7 @@ resource "azurerm_virtual_network" "vnet" {
   tags = var.tags
 }
 
-tags = {
+  tags = {
     environment = "var.env"
   }
 
@@ -140,7 +140,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
       key_data = file(var.public_ssh_key_path)
     }
   }
-
+  
+  windows_profile {
+  admin_username = var.windows_admin_username
+  admin_password = var.windows_admin_password
+}
   default_node_pool {
     name            = "agentpool"
     node_count      = var.aks_agent_count
