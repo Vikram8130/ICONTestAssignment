@@ -9,3 +9,7 @@ spec:
   ports:
   - protocol: TCP
     port: 80    
+
+
+# Here we can integrate this service type with Azure LoadBalancer Service to leverage its loadbancing 
+# features based on health probes and other metrics.
