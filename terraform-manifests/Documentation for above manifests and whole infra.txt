@@ -4,6 +4,11 @@ Terraform Manifests Validate
 Provision Stage AKS Cluster
 Provision Prod AKS Cluster
 
+Note:- We can also use existing images used to create containers being deployed on App Service existing in current environment 
+       or we can create new images to be used in AKS Cluster. 
+
+
+
 Step 1: Create New Azure DevOps Project for IAC
 Go to -> Azure DevOps -> Select Organization -> aksdemo2 -> Create New Project
 Project Name: terraform-azure-aks
