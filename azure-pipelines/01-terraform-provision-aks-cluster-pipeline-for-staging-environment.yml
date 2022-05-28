@@ -76,6 +76,70 @@ variables:
 - name: PROD_ENVIRONMENT
   value: prod  
 
+## ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+ 
+#trigger:
+#- master
+ 
+#pool:
+  #vmImage: 'windows-latest'
+ 
+#variables:
+  #solution: '**/*.sln'
+  #buildPlatform: 'Any CPU'
+  #buildConfiguration: 'Release'
+ 
+#steps:
+#- task: NuGetToolInstaller@1
+ 
+#- task: NuGetCommand@2
+  #inputs:
+    #restoreSolution: '$(solution)'
+
+# Use SonarCloud and SonarQube tools for measuring code quality and  Static Code Analysis
+## Service Connection will be used to connect SonarCloud with Azure Repos/ Azure Pipelines
+# - task: SonarCloudPrepare@1
+#  inputs:
+#    SonarCloud: 'sonar-connection'
+    organization: 'app-org'
+    scannerMode: 'MSBuild'
+    projectKey: 'app-project'
+    projectName: 'app-project'
+
+#- task: VSBuild@1
+  #inputs:
+    #solution: '$(solution)'
+    #msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    #platform: '$(buildPlatform)'
+    #configuration: '$(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: test
+#    projects: '**/*Test/*.csproj'
+#    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
+#    publishTestResults: true    
+
+#- task: WhiteSource Bolt@20
+
+# For .Net based applications, we can use the .Net Core CLI task to generate code coverage reports.
+## coverlet.msbuild is a cross platform code coverage library for .NET. 
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
+ 
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
+
 # Stage-1: Terraform Validate Stage
 ## Step-1: Publish Artifacts to Pipeline (Pipeline artifacts provide a way to share files between stages in a pipeline or between different pipelines. )
 ## Step-2: Install Latest Terraform (0.13.5) (Ideally not needed if we use default Ubuntu Agents)

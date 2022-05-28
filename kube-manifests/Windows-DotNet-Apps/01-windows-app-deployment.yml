@@ -22,6 +22,7 @@ spec:
       containers:
       - name: windows-app1
         image: mcr.microsoft.com/dotnet/framework/samples:aspnetapp
+      ##Above image could be from acr repo also.  
         resources:
           limits:
             cpu: 1

@@ -17,10 +17,16 @@ provider "azurerm" {
 
 locals {
   resource_group="app-grp"
-  location="North Europe"  
+  location="South Europe"  
 }
-
-
+data "azurerm_key_vault" "keyvault" {
+  name                = "appvault10001"
+  resource_group_name = "newgrp1"
+}
+data "azurerm_key_vault_secret" "vmsecret" {
+  name         = "vmpassword"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
 resource "azurerm_resource_group" "app_grp"{
   name=local.resource_group
   location=local.location
@@ -79,7 +85,7 @@ resource "azurerm_windows_virtual_machine" "app_vm" {
   location            = azurerm_resource_group.app_grp.location
   size                = "Standard_D2s_v4"
   admin_username      = "demousr"
-  admin_password      = "*******"  
+  admin_password      = data.azurerm_key_vault_secret.vmsecret.value  
   network_interface_ids = [
     azurerm_network_interface.app_interface.id,
   ]
@@ -95,6 +101,9 @@ resource "azurerm_windows_virtual_machine" "app_vm" {
     sku       = "2016-Datacenter"
     version   = "latest"
   }
+  os_profile_windows_config {
+    disable_password_authentication = false
+  }  
 
   depends_on = [
     azurerm_network_interface.app_interface

@@ -1,5 +1,28 @@
+variable "storage_account_name" {
+    type=string
+    default="weblogsstorageacc"
+}
+ 
+variable "resource_group_name" {
+    type=string
+    default="terraform_grp"
+}
+ 
+provider "azurerm"{
+version = " > 2.0"
+subscription_id = " "
+tenant_id       = " "
+features {}
+}
+
+#Terraform State Storage Account
+  backend "azurerm" {}
+resource "azurerm_resource_group" "example" {
+  name     = var.resource_group_name
+  location = "South Europe"
+}
 resource "azurerm_storage_account" "website_log_storage" {
-  name                     = "weblogsstorageacc"
+  name                     = var.storage_account_name
   resource_group_name      = azurerm_resource_group.example.name
   location                 = azurerm_resource_group.example.location
   account_tier             = "Standard"
@@ -36,3 +59,5 @@ tags = {
   }
 
 }
+
+# We can connect to our storage account either via public IP address or service endpoints, or privately using a privte endpoints.
