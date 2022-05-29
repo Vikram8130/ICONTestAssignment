@@ -60,4 +60,3 @@ tags = {
 
 }
 
-# We can connect to our storage account either via public IP address or service endpoints, or privately using a privte endpoints.
