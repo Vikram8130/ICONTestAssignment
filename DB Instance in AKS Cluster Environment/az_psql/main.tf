@@ -1,5 +1,4 @@
 resource "azurerm_postgresql_server" "az_psql" {
-  count               = 2
   name                = "az-${terraform.workspace}-psql"
   location            = "${var.location}"
   resource_group_name = "${var.res_group_name}"

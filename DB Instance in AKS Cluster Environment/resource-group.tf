@@ -1,8 +1,5 @@
-# depending of the workspace we are in resource name will be different for stage or prod
-resource "azurerm_resource_group" "res_group" {
-  name     = "aks-${terraform.workspace}"
-  location = "${var.location}"
-  tags {
-    environment = "${terraform.workspace}"
-  }
+resource "local_file" "kubeconfig" {
+  depends_on   = [azurerm_kubernetes_cluster.k8s]
+  filename     = "kubeconfig"
+  content      = azurerm_kubernetes_cluster.k8s.kube_config_raw
 }

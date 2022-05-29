@@ -1,33 +1,3 @@
-resource "azurerm_virtual_network" "vpc" {
-  name          = "vpc-${terraform.workspace}"
-  address_space = ["${lookup(var.address_space, terraform.workspace)}"]
-  location            = "${var.location}"
-  resource_group_name = "${var.res_group_name}"
-  tags {
-    environment = "${terraform.workspace}"
-  }
-}
-# VPC name and CIDR is dependent on workspace
-
-resource "azurerm_subnet" "subnet" {
-  name                      = "akc-${terraform.workspace}-subnet"
-  resource_group_name       = "${var.res_group_name}"
-  network_security_group_id = "${var.net_sec_group_id}"
-  virtual_network_name      = "${var.vnet_name}"
-  address_prefix            = "${var.subnet_prefixes[terraform.workspace]}"
-}
-
-# subnet name and CIDR dependant on workspace used
-
-resource azurerm_network_security_group "net_sec_group" {
-  name                = "akc-${terraform.workspace}-nsg"
-  location            = "${var.location}"
-  resource_group_name = "${var.res_group_name}"
-  tags {
-    environment = "${terraform.workspace}"
-  }
-}
-
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "k8s-${terraform.workspace}"
   location            = "${var.location}"
@@ -71,3 +41,5 @@ az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscr
     Environment = "${terraform.workspace}"
   }
 }
+
+# capacity and type of node depends on workspace.

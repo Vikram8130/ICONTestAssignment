@@ -16,4 +16,126 @@ databases in different or same datacentres/zones and networking componenents and
 -> Note 3 : We can also use Azure Express Route for a more dedicated connnection between databases and azure services and components. 
 
 
+# Initial tooling setup of azure CLI, kubectl, and Terraform
+
+#  Configure azure CLI
+-> Once we have azure cli installed will need to configure to allow cli to access Azure Cloud Services
+Associate Azure CLI with your Microsoft Azure cloud account: 
+
+az login
+az configure
+
+# Setup prerequisites for terraform account
+
+# Create Service Principals terraform account
+Service principals are separate identities that can be associated with an account. 
+Service principals are useful for working with applications and tasks that can be automated.
+
+export AZ_SUBSCRIPTION_ID=$(az account show --query id --out tsv)
+az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscriptions/$AZ_SUBSCRIPTION_ID"
+az login --service-principal --username $AZ_CLIENT_NAME_ID --password $AZ_CLIENT_SECRET --tenant $AZ_TENANT_ID
+
+Once service principal account was created we will need to export the rest of required environment variables
+
+export AZ_CLIENT_ID=$(az ad sp list --query "[?appDisplayName == 'terraform']|[].appId" --out tsv) && \
+export AZ_TENANT_ID=$(az ad sp list --display-name terraform --query "[].appOwnerTenantId" --out tsv) && \
+export AZ_CLIENT_NAME_ID=$(az ad sp list --query "[?appDisplayName == 'terraform']|[].appId" --out tsv) && \
+export AZ_CLIENT_SECRET="PASSWORD-XXXX-XXXX-XXXX-PASSWORD"
+printenv | grep AZ
+
+az role assignment list --assignee $AZ_CLIENT_ID
+
+Show details on service principal account
+az ad sp show --id $AZ_CLIENT_NAME_ID
+
+We can test account by sign in using the service principal
+az login --service-principal --username $AZ_CLIENT_NAME_ID --password $AZ_CLIENT_SECRET --tenant $AZ_TENANT_ID
+
+Sign in in back with your Azure user account
+az login -u your@email -p your_password
+
+# Create resource group
+
+Before deploying any resources to your subscription, you must create a resource group that will contain the resources. 
+Newly created resource group will be used for terraform service principal account to host azure blop storage for tsftate files.
+
+List available locations where can will create resource group
+az account list-locations --query []."{displayName:displayName, name:name}" --out table
+
+az group create --name Terraform --location "South Europe"
+
+To get all the resource groups in your subscription, use:
+az group list
+
+# Create storage account for terraform
+
+az storage account create -n terraformaks -g Terraform -l southeurope --sku Standard_LRS
+
+Retrieve storage account resource information by following command
+az storage account show --name terraformaks --resource-group Terraform
+
+Assign tags to the storage account resource
+az resource tag --tags Environment=Stage/Prod Resource=tfstate -g Terraform -n terraformeks --resource-type "Microsoft.Storage/storageAccounts"
+
+
+
+# Create Azure Blob Storage for Remote Terraform State tfstate
+
+Create a container in your Azure storage account.
+In order to create new storage container we will need to find account key
+az storage account keys list -g Terraform -n terraformaks --query [0].value -o tsv
+
+Export account key into env variable
+ACCOUNT_KEY="$(az storage account keys list -g Terraform -n terraformaks --query [0].value -o tsv)"
+
+Create container for terraform tfstate files
+az storage container create -n tfstate --account-name terraformaks --account-key $ACCOUNT_KEY
+
+Verify container creation
+az storage container list --account-name terraformaks
+
+Get all the resources in a resource group
+az resource list --resource-group Terraform
+
+Get all the resources with a tag name and value
+az resource list --tag Environment=Stage/Prod
+
+# Configure terraform credentials to allow access Azure terraform service principal
+
+We will create 2 tfvars file and populate with credentials.
+
+Note: NOTE: Replace $AZ_SUBSCRIPTION_ID, $AZ_CLIENT_NAME_ID, $AZ_CLIENT_SECRET, $AZ_TENANT_ID and 
+$ACCOUNT_KEY with data from environment variables exported earlier “printenv | grep AZ”
+
+# Creating Kubernetes cluster on Azure AKS and PostgreSQL
+
+After providing azure credentials we will create resource group where our K8s cluster will reside
+
+View terraform plan
+terraform plan
+
+Deploy infrastructure with terraform
+terraform apply
+
+Alternative we can export our plan and apply exported plan
+terraform plan -out=my.plan
+terraform show my.plan
+terraform apply my.plan
+
+# Working with kubernetes “kubectl” in AKS
+
+Connect to terraform
+export KUBECONFIG=~/.kube/azurek8s
+echo "$(terraform output ekc_kube_config)" > ~/.kube/azurek8s
+Now we should be able to access kubernetes API with kubectl
+
+kubectl get nodes
+kubectl get namespaces
+kubectl get services
+
+
+
+References:-
+https://mudrii.medium.com/microsoft-azure-akc-and-sql-database-with-terraform-50ba46bc0a2
+https://mudrii.medium.com/amazon-aws-eks-and-rds-postgresql-with-terraform-b94d6cf1be38
 
