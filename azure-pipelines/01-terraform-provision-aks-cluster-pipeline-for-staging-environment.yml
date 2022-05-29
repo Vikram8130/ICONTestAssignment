@@ -104,10 +104,10 @@ variables:
 # - task: SonarCloudPrepare@1
 #  inputs:
 #    SonarCloud: 'sonar-connection'
-    organization: 'app-org'
-    scannerMode: 'MSBuild'
-    projectKey: 'app-project'
-    projectName: 'app-project'
+#    organization: 'app-org'
+#    scannerMode: 'MSBuild'
+#    projectKey: 'app-project'
+#    projectName: 'app-project'
 
 #- task: VSBuild@1
   #inputs:
@@ -127,17 +127,17 @@ variables:
 
 # For .Net based applications, we can use the .Net Core CLI task to generate code coverage reports.
 ## coverlet.msbuild is a cross platform code coverage library for .NET. 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Code Coverage Results'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
-    failIfCoverageEmpty: true
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'Publish Code Coverage Results'
+#  inputs:
+#    codeCoverageTool: 'Cobertura'
+#    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
+#    failIfCoverageEmpty: true
  
-- task: SonarCloudAnalyze@1
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+#- task: SonarCloudAnalyze@1
+#- task: SonarCloudPublish@1
+#  inputs:
+#    pollingTimeoutSec: '300'
 
 
 # Stage-1: Terraform Validate Stage
