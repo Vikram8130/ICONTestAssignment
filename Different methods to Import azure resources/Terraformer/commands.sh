@@ -41,3 +41,10 @@ export ARM_TENANT_ID=<replace>
 terraform init
 
 terraformer plan azure --output hcl --resource-group rg-aks-cluster --resources="*" --verbose
+
+# Terraformer is a tool that we can use to import existing infrastructure as Terraform IaC. 
+#This allows us take resources we've created by some other means and bring it under Terraform management. 
+#This is also useful when doing infrastructure migrations.
+
+
+
