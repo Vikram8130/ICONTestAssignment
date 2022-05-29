@@ -34,8 +34,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name = "${var.res_group_name}"
   dns_prefix          = "k8s-${terraform.workspace}"
   windows_profile {
-  admin_username = var.windows_admin_username
-  admin_password = var.windows_admin_password
+    admin_username = var.windows_admin_username
+    admin_password = var.windows_admin_password
 }
   agent_pool_profile {
     name            = "agentpool"
