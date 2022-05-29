@@ -16,6 +16,8 @@ databases in different or same datacentres/zones and networking componenents and
 -> Note 3 : We can also use Azure Express Route for a more dedicated connnection between databases and azure services and components. 
 
 
+Steps that have been followed:-
+
 # Initial tooling setup of azure CLI, kubectl, and Terraform
 
 #  Configure azure CLI
