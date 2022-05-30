@@ -3,6 +3,7 @@
 ## As per the strategy decided, the release branch shall be connected with the staging environment while the master branch 
 shall be connected with the production environment
 
+Authentication Method: Service Princiapl (automatic)
 
 # Terraform State Storage Azure RM
 Resource Group: terraform-storage-rg
