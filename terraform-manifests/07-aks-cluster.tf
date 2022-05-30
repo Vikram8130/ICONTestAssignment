@@ -77,8 +77,6 @@ network_profile {
 tags = {
   Environment = var.environment
 }
-
-
 }
 
 /*Below configuration can also be used for above functionality
