@@ -89,7 +89,7 @@ tags = {
 
 }
 
-/*Below configuration can also be used foe above functionality
+/*Below configuration can also be used for above functionality
 
 terraform {
   backend "azurerm" {

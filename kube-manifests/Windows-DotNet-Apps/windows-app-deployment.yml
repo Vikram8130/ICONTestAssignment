@@ -15,7 +15,7 @@ spec:
       labels:
         app: windows-app1
     spec:
-# To schedule pods on based on NodeSelectors      
+# To schedule pods on windows nodepool based on NodeSelectors      
       nodeSelector:
         #"beta.kubernetes.io/os": windows
         app: dotnet-apps
