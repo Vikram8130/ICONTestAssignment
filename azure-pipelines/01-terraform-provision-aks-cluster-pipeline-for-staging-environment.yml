@@ -223,7 +223,7 @@ stages:
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'terraform-aks-azurerm-svc-con'
                 commandOptions: '-var rdp_key=$(rdpkey.secureFilePath) -var environment=$(STAGE_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(STAGE_ENVIRONMENT)-$(Build.BuildId).out'
-                allowTelemetryCollection: false
+                allowTelemetryCollection: true
             - task: TerraformCLI@0
               displayName: Terraform Apply
               inputs:
