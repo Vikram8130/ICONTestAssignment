@@ -60,7 +60,8 @@ Verify if terraform init command ran successfully from Azure Pipelines
 Verify Storage Account
 Verify Storage Container
 Verify tfstate file got created in storage container
-Verify new AKS Cluster in Azure Mgmt Console
+
+-> Verify new AKS Cluster in Azure Mgmt Console
 Verify Resource Group
 Verify AKS Cluster
 Verify AD Group
