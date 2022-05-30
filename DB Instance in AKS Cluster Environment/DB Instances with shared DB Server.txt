@@ -69,7 +69,7 @@ az group create --name Terraform --location "South Europe"
 To get all the resource groups in your subscription, use:
 az group list
 
-# Create storage account for terraform
+# Create storage account for terraform ( We can use terraform for the same)
 
 az storage account create -n terraformaks -g Terraform -l southeurope --sku Standard_LRS
 
@@ -78,8 +78,6 @@ az storage account show --name terraformaks --resource-group Terraform
 
 Assign tags to the storage account resource
 az resource tag --tags Environment=Stage/Prod Resource=tfstate -g Terraform -n terraformeks --resource-type "Microsoft.Storage/storageAccounts"
-
-
 
 # Create Azure Blob Storage for Remote Terraform State tfstate
 

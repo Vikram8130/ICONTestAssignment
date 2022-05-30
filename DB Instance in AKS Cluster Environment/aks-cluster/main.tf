@@ -32,6 +32,7 @@ az ad sp create-for-rbac --name terraform --role="Contributor" --scopes="/subscr
     network_plugin = "azure"
   }
   
+  # For getting the functionality of Ingress, enable http application routing
   addon_profile {
     http_application_routing {
       enabled = true
