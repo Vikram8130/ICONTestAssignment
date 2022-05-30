@@ -45,7 +45,7 @@ Authenticating to Azure using a Service Principal and a Client Secret
 # We first specify the terraform provider. 
 # Terraform will use the provider to ensure that we can work with Microsoft Azure
 
-**** It is being recommended to use either a Service Principal or Managed Service Identity when running Terraform non-interactively 
+**** It is being recommended to use either a Service Principal or System Assigned Managed Identity when running Terraform non-interactively 
 (such as when running Terraform in a CI server) - and authenticating using the Azure CLI when running Terraform locally.
 
 Here we need to mention the Azure AD Application Object credentials to allow us to work with our Azure account. 
