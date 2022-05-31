@@ -57,6 +57,7 @@ resource "azurerm_subnet" "SubnetA" {
   ]
 }
 
+
 // This subnet is meant for the Azure Bastion service
 resource "azurerm_subnet" "Azure_Bastion_Subnet" {
   name                 = "AzureBastionSubnet"
